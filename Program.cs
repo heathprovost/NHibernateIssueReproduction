@@ -91,10 +91,12 @@ public static class Program
 
         using (var session = sessionFactory.WithOptions().Connection(connection).OpenSession())
         {
-            // works
+            // this does not work, because NHibernate 5.7.0 does not translate the 
+            // LINQ expression to SQL correctly when using a string array. It does, however,
+            // work when using new[] instead of a string array. This works:
+            //
             // var names = new [] { "Widget", "Gadget" };
-
-            //does not work
+            //            
             var names = new string[] { "Widget", "Gadget" };
 
             var results = session.Query<Product>()
