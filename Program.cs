@@ -92,12 +92,11 @@ public static class Program
         using (var session = sessionFactory.WithOptions().Connection(connection).OpenSession())
         {
             // this does not work, because NHibernate 5.7.0 does not translate the 
-            // LINQ expression to SQL correctly when using a string array. It does, however,
-            // work when using new[] instead of a string array. This works:
-            //
-            // var names = new [] { "Widget", "Gadget" };
-            //            
+            // LINQ expression to SQL correctly when using a string array. 
             var names = new string[] { "Widget", "Gadget" };
+
+            // It does, however, work when using new[] instead of a string array. This works:
+            // var names = new [] { "Widget", "Gadget" };
 
             var results = session.Query<Product>()
                 .Where(p => names.Contains(p.Name))
